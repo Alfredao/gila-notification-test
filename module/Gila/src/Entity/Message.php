@@ -30,6 +30,10 @@ class Message
     #[ORM\Column(name: 'status', type: Types::INTEGER, nullable: false, enumType: Status::class)]
     private ?Status $status = null;
 
+    #[ORM\ManyToOne(targetEntity: Broadcast::class, inversedBy: 'messages')]
+    #[ORM\JoinColumn(name: 'broadcast_id', referencedColumnName: 'id')]
+    private ?Broadcast $broadcast = null;
+
     /**
      * Get Id
      *
@@ -112,6 +116,31 @@ class Message
     : Message
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get Broadcast
+     *
+     * @return \Gila\Entity\Broadcast|null
+     */
+    public function getBroadcast()
+    : ?Broadcast
+    {
+        return $this->broadcast;
+    }
+
+    /**
+     * Set Broadcast
+     *
+     * @param \Gila\Entity\Broadcast $broadcast
+     * @return Message
+     */
+    public function setBroadcast(Broadcast $broadcast)
+    : Message
+    {
+        $this->broadcast = $broadcast;
 
         return $this;
     }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace API\V1\Rest\Message;
 
+use Gila\Entity\Broadcast;
 use Gila\Entity\Message\Status;
 use Laminas\Hydrator\ClassMethodsHydrator;
 use Laminas\Stdlib\ArraySerializableInterface;
@@ -13,6 +14,7 @@ class MessageEntity implements ArraySerializableInterface
     private ?string $text = null;
     private ?\DateTimeImmutable $deliveredAt = null;
     private ?Status $status = null;
+    private ?Broadcast $broadcast = null;
 
     /**
      * Get array copy
@@ -27,6 +29,10 @@ class MessageEntity implements ArraySerializableInterface
             'text'         => $this->getText(),
             'delivered_at' => $this->getDeliveredAt(),
             'status'       => $this->getStatus()->name,
+            'broadcast'    => [
+                'category' => $this->getBroadcast()?->getCategory()?->getName(),
+                'channel'  => $this->getBroadcast()?->getChannel()?->getName(),
+            ],
 
         ];
     }
@@ -140,6 +146,31 @@ class MessageEntity implements ArraySerializableInterface
     : MessageEntity
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get Broadcast
+     *
+     * @return \Gila\Entity\Broadcast|null
+     */
+    public function getBroadcast()
+    : ?Broadcast
+    {
+        return $this->broadcast;
+    }
+
+    /**
+     * Set Broadcast
+     *
+     * @param \Gila\Entity\Broadcast|null $broadcast
+     * @return MessageEntity
+     */
+    public function setBroadcast(?Broadcast $broadcast)
+    : MessageEntity
+    {
+        $this->broadcast = $broadcast;
 
         return $this;
     }

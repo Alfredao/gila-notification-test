@@ -24,14 +24,14 @@ final class Version20230307064354 extends AbstractMigration
         $table = $schema->createTable('subscription');
 
         $table->addColumn('user_id', 'integer', ['unsigned' => true]);
-        $table->addColumn('category_channel_id', 'integer', ['unsigned' => true]);
+        $table->addColumn('broadcast_id', 'integer', ['unsigned' => true]);
         $table->addColumn('created_at', 'datetime', ['notnull' => true]);
         $table->addColumn('updated_at', 'datetime', ['notnull' => false]);
 
-        $table->setPrimaryKey(['user_id', 'category_channel_id']);
+        $table->setPrimaryKey(['user_id', 'broadcast_id']);
 
-        $table->addForeignKeyConstraint('user', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_subscription_user');
-        $table->addForeignKeyConstraint('category_channel', ['category_channel_id'], ['id'], ['onDelete' => 'CASCADE'], 'FK_subscription_category_channel');
+        $table->addForeignKeyConstraint('user', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'fk_subscription_user');
+        $table->addForeignKeyConstraint('broadcast', ['broadcast_id'], ['id'], ['onDelete' => 'CASCADE'], 'fk_subscription_broadcast');
     }
 
     public function down(Schema $schema)

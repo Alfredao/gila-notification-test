@@ -33,7 +33,7 @@ if (PHP_SAPI === 'cli-server' && is_file(__DIR__ . parse_url($_SERVER['REQUEST_U
 if (!file_exists('vendor/autoload.php')) {
     throw new RuntimeException(
         'Unable to load application.' . PHP_EOL
-        . '- Type `docker-compose run cryptopay-php-apache composer install` to install.'
+        . '- Type `composer install` to install.'
     );
 }
 

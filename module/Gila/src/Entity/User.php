@@ -34,10 +34,10 @@ class User
     #[ORM\Column(name: 'status', type: Types::INTEGER, nullable: false, enumType: Status::class)]
     private ?Status $status = null;
 
-    #[ORM\ManyToMany(targetEntity: CategoryChannel::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Broadcast::class, inversedBy: 'users')]
     #[ORM\JoinTable(name: 'subscription')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'category_channel_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'broadcast_id', referencedColumnName: 'id')]
     private Collection $subscriptions;
 
     /**

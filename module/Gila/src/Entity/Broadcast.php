@@ -4,15 +4,16 @@ declare(strict_types=1);
 namespace Gila\Entity;
 
 use Application\Entity\Traits\Timestamping\TimestampableTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gila\Repository\CategoryChannelRepo;
+use Gila\Repository\BroadcastRepo;
 
-#[ORM\Table(name: 'category_channel')]
-#[ORM\Entity(repositoryClass: CategoryChannelRepo::class)]
+#[ORM\Table(name: 'broadcast')]
+#[ORM\Entity(repositoryClass: BroadcastRepo::class)]
 #[ORM\HasLifecycleCallbacks]
-class CategoryChannel
+class Broadcast
 {
     use TimestampableTrait;
 
@@ -29,8 +30,17 @@ class CategoryChannel
     #[ORM\JoinColumn(name: 'channel_id', referencedColumnName: 'id')]
     private ?Channel $channel = null;
 
+    #[ORM\OneToMany(mappedBy: 'broadcast', targetEntity: Message::class)]
+    private Collection $messages;
+
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'subscriptions')]
     private Collection $subscribers;
+
+    public function __construct()
+    {
+        $this->messages    = new ArrayCollection();
+        $this->subscribers = new ArrayCollection();
+    }
 
     /**
      * Get Id
@@ -58,10 +68,10 @@ class CategoryChannel
      * Set Category
      *
      * @param \Gila\Entity\Category $category
-     * @return CategoryChannel
+     * @return Broadcast
      */
     public function setCategory(Category $category)
-    : CategoryChannel
+    : Broadcast
     {
         $this->category = $category;
 
@@ -83,10 +93,10 @@ class CategoryChannel
      * Set Channel
      *
      * @param \Gila\Entity\Channel $channel
-     * @return CategoryChannel
+     * @return Broadcast
      */
     public function setChannel(Channel $channel)
-    : CategoryChannel
+    : Broadcast
     {
         $this->channel = $channel;
 
@@ -102,5 +112,16 @@ class CategoryChannel
     : Collection
     {
         return $this->subscribers;
+    }
+
+    /**
+     * Get Subscribers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMessages()
+    : Collection
+    {
+        return $this->messages;
     }
 }

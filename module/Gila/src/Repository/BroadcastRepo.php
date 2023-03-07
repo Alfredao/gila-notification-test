@@ -5,6 +5,6 @@ namespace Gila\Repository;
 
 use Application\Repository\AbstractRepository;
 
-class CategoryChannelRepo extends AbstractRepository
+class BroadcastRepo extends AbstractRepository
 {
 }
