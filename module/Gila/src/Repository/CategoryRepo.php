@@ -5,6 +5,6 @@ namespace Gila\Repository;
 
 use Application\Repository\AbstractRepository;
 
-class EmptyRepo extends AbstractRepository
+class CategoryRepo extends AbstractRepository
 {
 }

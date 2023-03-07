@@ -11,7 +11,7 @@ return [
 
         ],
         'factories' => [
-            Model\PaymentModel::class => Model\Factory\PaymentModelFactory::class,
+            Model\UserModel::class => Model\Factory\UserModelFactory::class,
         ],
     ],
     'doctrine'        => [

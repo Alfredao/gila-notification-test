@@ -7,8 +7,7 @@ use Application\Model\AbstractModel;
 use Application\Resources\EntityManagerAwareInterface;
 use Application\Resources\EntityManagerAwareTrait;
 
-class PaymentModel extends AbstractModel implements EntityManagerAwareInterface
+class CategoryModel extends AbstractModel implements EntityManagerAwareInterface
 {
     use EntityManagerAwareTrait;
-
 }
