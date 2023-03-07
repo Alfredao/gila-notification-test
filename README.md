@@ -12,9 +12,6 @@ The application uses a PHP backend with Laminas API Tools and a Next.js frontend
 
 The system uses object-oriented programming (OOP) principles and is designed to be scalable, allowing for the addition of more types of notifications in the future.
 
-Sure, here's another version of the setup description for the project:
-
-
 Technology Stack
 ----------------
 
