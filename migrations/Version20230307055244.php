@@ -22,6 +22,8 @@ final class Version20230307055244 extends AbstractMigration
     {
         $table = $schema->createTable('user');
         $table->addColumn('id', 'integer', ['unsigned' => true, 'autoincrement' => true]);
+        $table->addColumn('created_at', 'datetime', ['notnull' => true]);
+        $table->addColumn('updated_at', 'datetime', ['notnull' => false]);
         $table->addColumn('name', 'string', ['notnull' => true]);
         $table->addColumn('email', 'string', ['notnull' => true]);
         $table->addColumn('phone_number', 'string', ['notnull' => true]);

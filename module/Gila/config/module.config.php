@@ -7,11 +7,11 @@ use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 
 return [
     'service_manager' => [
-        'aliases'   => [
-
-        ],
         'factories' => [
-            Model\UserModel::class => Model\Factory\UserModelFactory::class,
+            Model\ChannelModel::class  => Model\Factory\CategoryModelFactory::class,
+            Model\CategoryModel::class => Model\Factory\ChannelModelFactory::class,
+            Model\MessageModel::class  => Model\Factory\MessageModelFactory::class,
+            Model\UserModel::class     => Model\Factory\UserModelFactory::class,
         ],
     ],
     'doctrine'        => [

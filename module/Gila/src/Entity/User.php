@@ -38,7 +38,7 @@ class User
     #[ORM\JoinTable(name: 'subscription')]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'category_channel_id', referencedColumnName: 'id')]
-    private Collection $subscription;
+    private Collection $subscriptions;
 
     /**
      * Get Id
@@ -149,5 +149,16 @@ class User
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * Get Subscriptions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubscriptions()
+    : Collection
+    {
+        return $this->subscriptions;
     }
 }

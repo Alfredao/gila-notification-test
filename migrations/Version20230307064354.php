@@ -25,8 +25,8 @@ final class Version20230307064354 extends AbstractMigration
 
         $table->addColumn('user_id', 'integer', ['unsigned' => true]);
         $table->addColumn('category_channel_id', 'integer', ['unsigned' => true]);
-        $table->addColumn('created_at', 'datetime');
-        $table->addColumn('updated_at', 'datetime');
+        $table->addColumn('created_at', 'datetime', ['notnull' => true]);
+        $table->addColumn('updated_at', 'datetime', ['notnull' => false]);
 
         $table->setPrimaryKey(['user_id', 'category_channel_id']);
 

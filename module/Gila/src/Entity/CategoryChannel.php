@@ -30,5 +30,77 @@ class CategoryChannel
     private ?Channel $channel = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'subscriptions')]
-    private Collection $users;
+    private Collection $subscribers;
+
+    /**
+     * Get Id
+     *
+     * @return int|null
+     */
+    public function getId()
+    : ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get Category
+     *
+     * @return \Gila\Entity\Category|null
+     */
+    public function getCategory()
+    : ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set Category
+     *
+     * @param \Gila\Entity\Category $category
+     * @return CategoryChannel
+     */
+    public function setCategory(Category $category)
+    : CategoryChannel
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get Channel
+     *
+     * @return \Gila\Entity\Channel|null
+     */
+    public function getChannel()
+    : ?Channel
+    {
+        return $this->channel;
+    }
+
+    /**
+     * Set Channel
+     *
+     * @param \Gila\Entity\Channel $channel
+     * @return CategoryChannel
+     */
+    public function setChannel(Channel $channel)
+    : CategoryChannel
+    {
+        $this->channel = $channel;
+
+        return $this;
+    }
+
+    /**
+     * Get Subscribers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSubscribers()
+    : Collection
+    {
+        return $this->subscribers;
+    }
 }

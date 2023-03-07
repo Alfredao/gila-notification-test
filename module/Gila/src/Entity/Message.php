@@ -22,7 +22,7 @@ class Message
     private ?int $id = null;
 
     #[ORM\Column(name: 'text', type: Types::STRING, nullable: false)]
-    private ?string $name = null;
+    private ?string $text = null;
 
     #[ORM\Column(name: 'delivered_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $deliveredAt = null;
@@ -46,22 +46,22 @@ class Message
      *
      * @return string|null
      */
-    public function getName()
+    public function getText()
     : ?string
     {
-        return $this->name;
+        return $this->text;
     }
 
     /**
      * Set Name
      *
-     * @param string $name
+     * @param string $text
      * @return Message
      */
-    public function setName(string $name)
+    public function setText(string $text)
     : Message
     {
-        $this->name = $name;
+        $this->text = $text;
 
         return $this;
     }

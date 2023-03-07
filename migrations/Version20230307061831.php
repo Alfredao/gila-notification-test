@@ -25,7 +25,7 @@ final class Version20230307061831 extends AbstractMigration
 
         $table->addColumn('id', 'integer', ['unsigned' => true, 'autoincrement' => true]);
         $table->addColumn('created_at', 'datetime', ['notnull' => true]);
-        $table->addColumn('updated_at', 'datetime', ['notnull' => true]);
+        $table->addColumn('updated_at', 'datetime', ['notnull' => false]);
         $table->addColumn('text', 'string', ['length' => 255, 'notnull' => true]);
         $table->addColumn('delivered_at', 'datetime', ['notnull' => false]);
         $table->addColumn('status', 'integer', ['notnull' => true, 'unsigned' => true]);

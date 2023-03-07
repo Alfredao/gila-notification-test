@@ -3,110 +3,87 @@ declare(strict_types=1);
 
 namespace API\V1\Rest\Message;
 
+use Gila\Entity\Message;
+use Gila\Model\MessageModel;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
-use Laminas\Stdlib\Parameters;
+use Laminas\Hydrator\ClassMethodsHydrator;
 
 class MessageResource extends AbstractResourceListener
 {
+    private MessageModel $messageModel;
+
     /**
      * Create a resource
      *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
+     * @param mixed $data
+     * @throws \Throwable
      */
     public function create($data)
+    : array|ApiProblem
     {
-        return new ApiProblem(405, 'The POST method has not been defined');
-    }
+        try {
+            $message = $this->getMessageModel()->create((array)$data);
+        } catch (\Exception $e) {
+            return new ApiProblem(405, $e->getMessage());
+        }
 
-    /**
-     * Delete a resource
-     *
-     * @param  mixed $id
-     * @return ApiProblem|mixed
-     */
-    public function delete($id)
-    {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
-    }
+        $result = new MessageEntity();
+        $result->exchangeArray((new ClassMethodsHydrator())->extract($message));
 
-    /**
-     * Delete a collection, or members of a collection
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function deleteList($data)
-    {
-        return new ApiProblem(405, 'The DELETE method has not been defined for collections');
+        return $result->getArrayCopy();
     }
 
     /**
      * Fetch a resource
      *
-     * @param  mixed $id
-     * @return ApiProblem|mixed
+     * @param mixed $id
+     * @return ApiProblem|array
      */
     public function fetch($id)
+    : array|ApiProblem
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        try {
+            $em   = $this->getMessageModel()->getEntityManager();
+            $repo = $em->getRepository(Message::class);
+
+            $message = $repo->find($id);
+        } catch (\Exception $e) {
+            return new ApiProblem(405, $e->getMessage());
+        }
+
+        if (!$message) {
+            return [];
+        }
+
+        $result = new MessageEntity();
+        $result->exchangeArray((new ClassMethodsHydrator())->extract($message));
+
+        return $result->getArrayCopy();
     }
 
     /**
-     * Fetch all or a subset of resources
+     * Get MessageModel
      *
-     * @param  array|Parameters $params
-     * @return ApiProblem|mixed
+     * @return \Gila\Model\MessageModel
      */
-    public function fetchAll($params = [])
+    public function getMessageModel()
+    : MessageModel
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        return $this->messageModel;
     }
 
     /**
-     * Patch (partial in-place update) a resource
+     * Set MessageModel
      *
-     * @param  mixed $id
-     * @param  mixed $data
-     * @return ApiProblem|mixed
+     * @param \Gila\Model\MessageModel $messageModel
+     * @return MessageResource
      */
-    public function patch($id, $data)
+    public function setMessageModel(MessageModel $messageModel)
+    : MessageResource
     {
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
-    }
+        $this->messageModel = $messageModel;
 
-    /**
-     * Patch (partial in-place update) a collection or members of a collection
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function patchList($data)
-    {
-        return new ApiProblem(405, 'The PATCH method has not been defined for collections');
-    }
-
-    /**
-     * Replace a collection or members of a collection
-     *
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function replaceList($data)
-    {
-        return new ApiProblem(405, 'The PUT method has not been defined for collections');
-    }
-
-    /**
-     * Update a resource
-     *
-     * @param  mixed $id
-     * @param  mixed $data
-     * @return ApiProblem|mixed
-     */
-    public function update($id, $data)
-    {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        return $this;
     }
 }

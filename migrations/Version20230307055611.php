@@ -25,7 +25,7 @@ final class Version20230307055611 extends AbstractMigration
 
         $channelTable->addColumn('id', 'integer', ['autoincrement' => true, 'unsigned' => true]);
         $channelTable->addColumn('created_at', 'datetime', ['notnull' => true]);
-        $channelTable->addColumn('updated_at', 'datetime', ['notnull' => true]);
+        $channelTable->addColumn('updated_at', 'datetime', ['notnull' => false]);
         $channelTable->addColumn('name', 'string', ['length' => 255, 'notnull' => true]);
         $channelTable->addColumn('status', 'integer', ['notnull' => true]);
 
@@ -38,7 +38,7 @@ final class Version20230307055611 extends AbstractMigration
 
         $categoryTable->addColumn('id', 'integer', ['autoincrement' => true, 'unsigned' => true]);
         $categoryTable->addColumn('created_at', 'datetime', ['notnull' => true]);
-        $categoryTable->addColumn('updated_at', 'datetime', ['notnull' => true]);
+        $categoryTable->addColumn('updated_at', 'datetime', ['notnull' => false]);
         $categoryTable->addColumn('name', 'string', ['length' => 255, 'notnull' => true]);
         $categoryTable->addColumn('status', 'integer', ['notnull' => true, 'unsigned' => true]);
 
@@ -53,7 +53,7 @@ final class Version20230307055611 extends AbstractMigration
         $categoryChannelTable->addColumn('category_id', 'integer', ['unsigned' => true, 'notnull' => true]);
         $categoryChannelTable->addColumn('channel_id', 'integer', ['unsigned' => true, 'notnull' => true]);
         $categoryChannelTable->addColumn('created_at', 'datetime', ['notnull' => true]);
-        $categoryChannelTable->addColumn('updated_at', 'datetime', ['notnull' => true]);
+        $categoryChannelTable->addColumn('updated_at', 'datetime', ['notnull' => false]);
 
         $categoryChannelTable->addForeignKeyConstraint('category', ['category_id'], ['id'], ['onDelete' => 'CASCADE']);
         $categoryChannelTable->addForeignKeyConstraint('channel', ['channel_id'], ['id'], ['onDelete' => 'CASCADE']);
