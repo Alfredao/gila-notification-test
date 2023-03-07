@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  mariadb:
+    image: mariadb:10.3.36
+    platform: linux/x86_64
+    container_name: gilanotification-mariadb
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    env_file:
+      - ./.env
+    ports:
+      - "33062:3306"
+  redis:
+    image: redis:alpine
+    container_name: gilanotification-redis
+    healthcheck:
+      test: [ 'CMD', 'redis-cli', 'ping' ]
+    restart: unless-stopped
+    ports:
+      - "63792:6379"
+  php-apache:
+    build:
+      context: phpdocker/development/php-apache
+    container_name: gilanotification-php-apache
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8012:80"
+    depends_on:
+      - mariadb
+      - redis
+    links:
+      - mariadb
+      - redis
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: gilanotification-phpmyadmin
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - "1337:80"
+volumes:
+  mariadb-data:
