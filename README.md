@@ -1,40 +1,38 @@
-# Notification Test
+Notification System
+===================
 
-Have to create a notification system that has the ability to receive a message and depending on the category and subscribers, notify these users in the channels they are registered.
+This is a notification system that receives a message and depending on the category and subscribers, sends notifications to those users in the channels they are registered. 
 
-It will be 3 message categories:
-* Sports
-* Finance
-* Movies
+The system does not actually send any messages or communicate with external APIs. Instead, it stores information about notifications in a log. The log includes details about the message, notification type, user data, time, and more.
 
-And there will be 3 types of notifications, each type should have its own class to manage the logic of sending the message independently.
-* SMS
-* E-Mail
-* Push Notification
+Architecture
+------------
+
+The application uses a PHP backend with Laminas API Tools and a Next.js frontend. The backend is responsible for managing the logic of the notification system, while the frontend provides a user interface for submitting messages and viewing the log history.
+
+The system uses object-oriented programming (OOP) principles and is designed to be scalable, allowing for the addition of more types of notifications in the future.
+
+Sure, here's another version of the setup description for the project:
 
 
-No message will actually be sent or the need to communicate with any external APIs, only will register the sent notification in an archive of Logs or in a database.
+Technology Stack
+----------------
 
-In the log, it will need to save all the information necessary to identify that the notification has been sent correctly to the respective subscriber, such as the type of message, type of notification, user data, time, etc.
+The project will use the following technology stack:
 
-No user administration is required, you can use a Mock of users in the source code, and they must have the following information:
+*   Backend:
+    * PHP 8.2 with Laminas API Tools
+    * MariaDB 10.3 for data storage
+*   Frontend:
+    * Next.js 13
+    * React
 
-* ID
-* Name
-* Email
-* Phone number
-* Subscribed [ ] here you need to list all the categories where the user is subscribed
-* Channels [ ] a list of the notification's channels (SMS | E-Mail | Push Notification)
+Installation
+------------
 
-As user interface you need to display 2 main elements.
+To install and run the application, follow these steps:
 
-1. Submission form. A simple form to send the message, which will have 2 fields:
- * Category. List of available categories.
- * Message. Text area, only validate that the message is not empty
-2. Log history. A list of all records in the log, sorted from newest to oldest.
-
-We will evaluate:
-* Architecture of the application and software design patterns.
-* OOP and Scalability (ready to add more types of notifications). 
-* Manage requests to the Server by RESTful APIs.
-* For the tests, register at least 3 users with different configurations.
+1.  Clone the project repository to your local machine.
+2.  Navigate to the project directory in your terminal.
+3.  Run `docker-compose up -d` to start the Docker containers.
+8.  Navigate to `http://localhost:3000` in your web browser to view the application.

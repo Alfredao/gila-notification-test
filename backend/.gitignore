@@ -1,0 +1,11 @@
+.idea/
+.vagrant/
+!data/cache/.gitkeep
+phpunit.xml
+vendor/
+config/development.config.php
+data/cache/*
+.phpunit.result.cache
+.phpcs-cache
+.env
+data/DoctrineORMModule/Proxy/

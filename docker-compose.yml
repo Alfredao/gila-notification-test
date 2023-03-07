@@ -7,7 +7,7 @@ services:
     volumes:
       - mariadb-data:/var/lib/mysql
     env_file:
-      - ./.env
+      - ./backend/.env
     ports:
       - "33062:3306"
   redis:
@@ -20,11 +20,11 @@ services:
       - "63792:6379"
   php-apache:
     build:
-      context: phpdocker/development/php-apache
+      context: backend/docker/php-apache
     container_name: gilanotification-php-apache
     working_dir: /var/www/html
     volumes:
-      - .:/var/www/html
+      - ./backend:/var/www/html
     ports:
       - "8012:80"
     depends_on:
@@ -38,8 +38,15 @@ services:
     container_name: gilanotification-phpmyadmin
     restart: unless-stopped
     env_file:
-      - ./.env
+      - ./backend/.env
     ports:
       - "1337:80"
+  nextjs:
+    build: .
+    container_name: gilanotification-nextjs
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
 volumes:
   mariadb-data:
