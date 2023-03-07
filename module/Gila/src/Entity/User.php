@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Gila\Entity;
 
 use Application\Entity\Traits\Timestamping\TimestampableTrait;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gila\Entity\User\Status;
@@ -32,6 +33,12 @@ class User
 
     #[ORM\Column(name: 'status', type: Types::INTEGER, nullable: false, enumType: Status::class)]
     private ?Status $status = null;
+
+    #[ORM\ManyToMany(targetEntity: CategoryChannel::class, inversedBy: 'users')]
+    #[ORM\JoinTable(name: 'subscription')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\InverseJoinColumn(name: 'category_channel_id', referencedColumnName: 'id')]
+    private Collection $subscription;
 
     /**
      * Get Id

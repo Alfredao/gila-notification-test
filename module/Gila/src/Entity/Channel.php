@@ -29,12 +29,12 @@ class Channel
     #[ORM\Column(name: 'status', type: Types::INTEGER, nullable: false, enumType: Status::class)]
     private ?Status $status = null;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'channels')]
-    private Collection $categories;
+    #[ORM\OneToMany(mappedBy: 'channel', targetEntity: CategoryChannel::class)]
+    private Collection $categoryChannels;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+        $this->categoryChannels = new ArrayCollection();
     }
 
     /**
@@ -103,9 +103,9 @@ class Channel
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCategories()
+    public function getCategoryChannels()
     : Collection
     {
-        return $this->categories;
+        return $this->categoryChannels;
     }
 }

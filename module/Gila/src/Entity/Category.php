@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Gila\Entity;
 
 use Application\Entity\Traits\Timestamping\TimestampableTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,9 +29,83 @@ class Category
     #[ORM\Column(name: 'status', type: Types::INTEGER, nullable: false, enumType: Status::class)]
     private ?Status $status = null;
 
-    #[ORM\ManyToMany(targetEntity: Channel::class, inversedBy: 'categories')]
-    #[ORM\JoinTable(name: 'category_channel')]
-    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'channel_id', referencedColumnName: 'id')]
-    private Collection $channels;
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: CategoryChannel::class)]
+    private Collection $categoryChannels;
+
+    public function __construct()
+    {
+        $this->categoryChannels = new ArrayCollection();
+    }
+
+    /**
+     * Get Id
+     *
+     * @return int|null
+     */
+    public function getId()
+    : ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get Name
+     *
+     * @return string|null
+     */
+    public function getName()
+    : ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set Name
+     *
+     * @param string $name
+     * @return Category
+     */
+    public function setName(string $name)
+    : Category
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get Status
+     *
+     * @return \Gila\Entity\Category\Status|null
+     */
+    public function getStatus()
+    : ?Status
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set Status
+     *
+     * @param \Gila\Entity\Category\Status $status
+     * @return Category
+     */
+    public function setStatus(Status $status)
+    : Category
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get CategoryChannels
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategoryChannels()
+    : Collection
+    {
+        return $this->categoryChannels;
+    }
 }
