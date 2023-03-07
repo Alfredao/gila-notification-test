@@ -108,4 +108,19 @@ class Channel
     {
         return $this->broadcasts;
     }
+
+    /**
+     * Get array copy
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    : array
+    {
+        return [
+            'id'     => $this->getId(),
+            'name'   => $this->getName(),
+            'status' => $this->getStatus()->name,
+        ];
+    }
 }
