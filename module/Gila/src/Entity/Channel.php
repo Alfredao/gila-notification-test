@@ -31,4 +31,81 @@ class Channel
 
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'channels')]
     private Collection $categories;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
+
+    /**
+     * Get Id
+     *
+     * @return int|null
+     */
+    public function getId()
+    : ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get Name
+     *
+     * @return string|null
+     */
+    public function getName()
+    : ?string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set Name
+     *
+     * @param string $name
+     * @return Channel
+     */
+    public function setName(string $name)
+    : Channel
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get Status
+     *
+     * @return \Gila\Entity\User\Status|null
+     */
+    public function getStatus()
+    : ?Status
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set Status
+     *
+     * @param \Gila\Entity\User\Status $status
+     * @return Channel
+     */
+    public function setStatus(Status $status)
+    : Channel
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get Categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    : Collection
+    {
+        return $this->categories;
+    }
 }

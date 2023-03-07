@@ -6,13 +6,13 @@ namespace Gila\Entity;
 use Application\Entity\Traits\Timestamping\TimestampableTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gila\Entity\User\Status;
-use Gila\Repository\UserRepo;
+use Gila\Entity\Message\Status;
+use Gila\Repository\MessageRepo;
 
-#[ORM\Table(name: 'user')]
-#[ORM\Entity(repositoryClass: UserRepo::class)]
+#[ORM\Table(name: 'message')]
+#[ORM\Entity(repositoryClass: MessageRepo::class)]
 #[ORM\HasLifecycleCallbacks]
-class User
+class Message
 {
     use TimestampableTrait;
 
@@ -21,14 +21,11 @@ class User
     #[ORM\Column(name: 'id', type: Types::INTEGER, options: ['unsigned' => true])]
     private ?int $id = null;
 
-    #[ORM\Column(name: 'name', type: Types::STRING, nullable: false)]
+    #[ORM\Column(name: 'text', type: Types::STRING, nullable: false)]
     private ?string $name = null;
 
-    #[ORM\Column(name: 'email', type: Types::STRING, nullable: false)]
-    private ?string $email = null;
-
-    #[ORM\Column(name: 'phone_number', type: Types::STRING, nullable: false)]
-    private ?string $phoneNumber = null;
+    #[ORM\Column(name: 'delivered_at', type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $deliveredAt = null;
 
     #[ORM\Column(name: 'status', type: Types::INTEGER, nullable: false, enumType: Status::class)]
     private ?Status $status = null;
@@ -59,10 +56,10 @@ class User
      * Set Name
      *
      * @param string $name
-     * @return User
+     * @return Message
      */
     public function setName(string $name)
-    : User
+    : Message
     {
         $this->name = $name;
 
@@ -70,51 +67,26 @@ class User
     }
 
     /**
-     * Get Email
+     * Get DeliveredAt
      *
-     * @return string|null
+     * @return \DateTimeImmutable|null
      */
-    public function getEmail()
-    : ?string
+    public function getDeliveredAt()
+    : ?\DateTimeImmutable
     {
-        return $this->email;
+        return $this->deliveredAt;
     }
 
     /**
-     * Set Email
+     * Set DeliveredAt
      *
-     * @param string $email
-     * @return User
+     * @param \DateTimeImmutable $deliveredAt
+     * @return Message
      */
-    public function setEmail(string $email)
-    : User
+    public function setDeliveredAt(\DateTimeImmutable $deliveredAt)
+    : Message
     {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get PhoneNumber
-     *
-     * @return string|null
-     */
-    public function getPhoneNumber()
-    : ?string
-    {
-        return $this->phoneNumber;
-    }
-
-    /**
-     * Set PhoneNumber
-     *
-     * @param string $phoneNumber
-     * @return User
-     */
-    public function setPhoneNumber(string $phoneNumber)
-    : User
-    {
-        $this->phoneNumber = $phoneNumber;
+        $this->deliveredAt = $deliveredAt;
 
         return $this;
     }
@@ -122,7 +94,7 @@ class User
     /**
      * Get Status
      *
-     * @return \Gila\Entity\User\Status|null
+     * @return \Gila\Entity\Message\Status|null
      */
     public function getStatus()
     : ?Status
@@ -133,11 +105,11 @@ class User
     /**
      * Set Status
      *
-     * @param \Gila\Entity\User\Status $status
-     * @return User
+     * @param \Gila\Entity\Message\Status $status
+     * @return Message
      */
     public function setStatus(Status $status)
-    : User
+    : Message
     {
         $this->status = $status;
 
