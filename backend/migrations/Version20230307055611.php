@@ -44,27 +44,11 @@ final class Version20230307055611 extends AbstractMigration
 
         $categoryTable->setPrimaryKey(['id']);
         $categoryTable->addUniqueIndex(['name']);
-
-
-        // Create broadcast table
-        $categoryChannelTable = $schema->createTable('broadcast');
-
-        $categoryChannelTable->addColumn('id', 'integer', ['unsigned' => true, 'autoincrement' => true]);
-        $categoryChannelTable->addColumn('category_id', 'integer', ['unsigned' => true, 'notnull' => true]);
-        $categoryChannelTable->addColumn('channel_id', 'integer', ['unsigned' => true, 'notnull' => true]);
-        $categoryChannelTable->addColumn('created_at', 'datetime', ['notnull' => true]);
-        $categoryChannelTable->addColumn('updated_at', 'datetime', ['notnull' => false]);
-
-        $categoryChannelTable->addForeignKeyConstraint('category', ['category_id'], ['id'], ['onDelete' => 'CASCADE'], 'fk_broadcast_category');
-        $categoryChannelTable->addForeignKeyConstraint('channel', ['channel_id'], ['id'], ['onDelete' => 'CASCADE'], 'fk_broadcast_channel');
-
-        $categoryChannelTable->setPrimaryKey(['id']);
     }
 
     public function down(Schema $schema)
     : void
     {
-        $schema->dropTable('broadcast');
         $schema->dropTable('category');
         $schema->dropTable('channel');
     }
