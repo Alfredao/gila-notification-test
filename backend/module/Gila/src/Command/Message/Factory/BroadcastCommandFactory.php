@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace Gila\Command\Message\Factory;
 
-use Doctrine\ORM\EntityManager;
 use Gila\Command\Message\BroadcastCommand;
+use Gila\Model\SubscriptionModel;
 use interop\container\containerinterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 
@@ -24,7 +24,7 @@ class BroadcastCommandFactory implements FactoryInterface
     : BroadcastCommand
     {
         $command = new BroadcastCommand();
-        $command->setEntityManager($container->get(EntityManager::class));
+        $command->setSubscriptionModel($container->get(SubscriptionModel::class));
 
         return $command;
     }

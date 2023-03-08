@@ -9,7 +9,6 @@ use Application\Resources\EntityManagerAwareTrait;
 use Doctrine\ORM\EntityManager;
 use Gila\Entity\Category;
 use Gila\Entity\Message;
-use Gila\Entity\Subscription;
 
 class MessageModel extends AbstractModel implements EntityManagerAwareInterface
 {
@@ -38,12 +37,5 @@ class MessageModel extends AbstractModel implements EntityManagerAwareInterface
 
             return $message;
         });
-    }
-
-    public function broadcast(Message $message)
-    {
-        /** @var \Gila\Repository\SubscriptionRepo $repo */
-        $repo        = $this->getEntityManager()->getRepository(Subscription::class);
-        $subscribers = $repo->findSubs($message);
     }
 }

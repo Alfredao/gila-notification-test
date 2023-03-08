@@ -3,20 +3,14 @@ declare(strict_types=1);
 
 namespace Gila\Command\Message;
 
-use Application\Resources\EntityManagerAwareInterface;
-use Application\Resources\EntityManagerAwareTrait;
-use Doctrine\ORM\EntityManager;
-use Gila\Entity\Message;
-use Gila\Entity\Subscription;
-use Gila\Entity\UserMessage;
-use Gila\Repository\SubscriptionRepo;
+use Gila\Model\SubscriptionModel;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class BroadcastCommand extends Command implements EntityManagerAwareInterface
+class BroadcastCommand extends Command
 {
-    use EntityManagerAwareTrait;
+    private SubscriptionModel $subscriptionModel;
 
     protected function configure()
     : void
@@ -25,21 +19,42 @@ class BroadcastCommand extends Command implements EntityManagerAwareInterface
         $this->setDescription('Broadcasts pending messages to users through channels');
     }
 
-    /**
-     * @throws \Throwable
-     */
     protected function execute(InputInterface $input, OutputInterface $output)
+    : int
     {
-        $this->getEntityManager()->wrapInTransaction(function (EntityManager $em) {
-            /** @var SubscriptionRepo $subscriptionRepo */
-            $subscriptionRepo = $em->getRepository(Subscription::class);
-            /** @var \Gila\Repository\MessageRepo $messageRepo */
-            $messageRepo = $em->getRepository(Message::class);
+        try {
+            $this->getSubscriptionModel()->broadcast($input, $output);
 
-            $messages = $messageRepo->findAllWaiting();
-            foreach ($messages as $message) {
+            return 0;
+        } catch (\Exception|\Throwable $e) {
+            $output->writeln($e->getMessage());
 
-            }
-        });
+            return 1;
+        }
+    }
+
+    /**
+     * Get SubscriptionModel
+     *
+     * @return \Gila\Model\SubscriptionModel
+     */
+    public function getSubscriptionModel()
+    : SubscriptionModel
+    {
+        return $this->subscriptionModel;
+    }
+
+    /**
+     * Set SubscriptionModel
+     *
+     * @param \Gila\Model\SubscriptionModel $subscriptionModel
+     * @return BroadcastCommand
+     */
+    public function setSubscriptionModel(SubscriptionModel $subscriptionModel)
+    : BroadcastCommand
+    {
+        $this->subscriptionModel = $subscriptionModel;
+
+        return $this;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Gila\Entity;
 
 use Application\Entity\Traits\Timestamping\TimestampableTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,11 +35,16 @@ class User
     #[ORM\Column(name: 'status', type: Types::INTEGER, nullable: false, enumType: Status::class)]
     private ?Status $status = null;
 
-    #[ORM\ManyToMany(targetEntity: Broadcast::class, inversedBy: 'users')]
-    #[ORM\JoinTable(name: 'subscription')]
-    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'broadcast_id', referencedColumnName: 'id')]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Subscription::class)]
     private Collection $subscriptions;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->subscriptions = new ArrayCollection();
+    }
 
     /**
      * Get Id

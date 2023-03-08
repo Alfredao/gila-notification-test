@@ -10,7 +10,7 @@ use Gila\Entity\Message\Status;
 class MessageRepo extends AbstractRepository
 {
     /**
-     * Find all messages waiting to be broadcasted
+     * Find all messages waiting to be broadcast
      *
      * @return Message[]
      */
@@ -19,7 +19,8 @@ class MessageRepo extends AbstractRepository
     {
         $qb = $this->createQueryBuilder('Message');
 
-        $qb->andWhere($qb->expr()->eq('Message.status', Status::WAITING));
+        $qb->andWhere($qb->expr()->eq('Message.status', $qb->expr()->literal(Status::WAITING->value)));
+        $qb->orderBy('Message.id', 'ASC');
 
         return $qb->getQuery()->getResult();
     }
