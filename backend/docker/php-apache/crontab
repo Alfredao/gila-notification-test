@@ -1,0 +1,8 @@
+#     ,------ MINUTE
+#    / ,----- HOUR
+#   / / ,---- DAY OF MONTH
+#  / / / ,--- MONTH
+# / / / / ,-- DAY OF WEEK
+#/ / / / /
+* * * * * /usr/local/bin/php /var/www/html/bin/laminas message:broadcast >> /var/log/cron/cron.log 2>&1
+#

@@ -3,28 +3,28 @@
 
 declare(strict_types=1);
 
+use Dotenv\Dotenv;
 use Laminas\Cli\ApplicationFactory;
 use Laminas\Cli\ApplicationProvisioner;
 use Laminas\Cli\ContainerResolver;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
-if (!file_exists('vendor/autoload.php')) {
+$projectRoot = '/var/www/html';
+
+if (!file_exists(sprintf("%s/vendor/autoload.php", $projectRoot))) {
     throw new RuntimeException(
         'Unable to load application.' . PHP_EOL
         . '- Type `composer install` to install.'
     );
 }
 
-// Setup autoloading
-require 'vendor/autoload.php';
-
-$projectRoot = \Application\Resources\Functions::getRootDir();
+require sprintf("%s/vendor/autoload.php", $projectRoot);
 
 // Set the main application directory as the current working directory
 chdir($projectRoot);
 
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . DIRECTORY_SEPARATOR . '..');
+$dotenv = Dotenv::createImmutable($projectRoot);
 $dotenv->load();
 
 $app                      = (new ApplicationFactory())();

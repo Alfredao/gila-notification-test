@@ -44,6 +44,9 @@ RUN apt-get install --yes libpng-dev \
 ## MySQL PDO support
  RUN docker-php-ext-install pdo_mysql
 
+## CronJobs support
+RUN apt-get update && apt-get install -y cron
+
 ## Redis support.  igbinary and libzstd-dev are only needed based on
 ## redis pecl options
 RUN pecl install igbinary \
@@ -52,13 +55,20 @@ RUN pecl install igbinary \
      && pecl install redis \
      && docker-php-ext-enable redis
 
-
-# Install the dependencies needed to build the PHP ZMQ extension
-RUN apt-get update && apt-get install -y libzmq3-dev
-
 ## Disable access logs
 RUN ln -fs /dev/null /var/log/apache2/access.log
 
 WORKDIR /var/www/html
 
 HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:80/ping || exit 1
+
+# Copy cron file to the cron.d directory
+COPY crontab /etc/cron.d/cron
+# Give execution rights on the cron job
+RUN chmod 0644 /etc/cron.d/cron
+# Apply cron job
+RUN crontab /etc/cron.d/cron
+# Create the log file to be able to run tail
+RUN mkdir -p /var/log/cron
+
+RUN sed -i 's/^exec /service cron start\n\nexec /' /usr/local/bin/apache2-foreground
