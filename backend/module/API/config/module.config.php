@@ -3,7 +3,6 @@ return [
     'service_manager' => [
         'factories' => [
             \API\V1\Rest\Message\MessageResource::class => \API\V1\Rest\Message\MessageResourceFactory::class,
-            \API\V1\Rest\Broadcast\BroadcastResource::class => \API\V1\Rest\Broadcast\BroadcastResourceFactory::class,
             \API\V1\Rest\Category\CategoryResource::class => \API\V1\Rest\Category\CategoryResourceFactory::class,
             \API\V1\Rest\Channel\ChannelResource::class => \API\V1\Rest\Channel\ChannelResourceFactory::class,
         ],
@@ -16,15 +15,6 @@ return [
                     'route' => '/api/message[/:message_id]',
                     'defaults' => [
                         'controller' => 'API\\V1\\Rest\\Message\\Controller',
-                    ],
-                ],
-            ],
-            'api.rest.broadcast' => [
-                'type' => 'Segment',
-                'options' => [
-                    'route' => '/api/broadcast[/:broadcast_id]',
-                    'defaults' => [
-                        'controller' => 'API\\V1\\Rest\\Broadcast\\Controller',
                     ],
                 ],
             ],
@@ -51,7 +41,6 @@ return [
     'api-tools-versioning' => [
         'uri' => [
             0 => 'api.rest.message',
-            1 => 'api.rest.broadcast',
             2 => 'api.rest.category',
             3 => 'api.rest.channel',
         ],
@@ -75,24 +64,6 @@ return [
             'entity_class' => \API\V1\Rest\Message\MessageEntity::class,
             'collection_class' => \API\V1\Rest\Message\MessageCollection::class,
             'service_name' => 'Message',
-        ],
-        'API\\V1\\Rest\\Broadcast\\Controller' => [
-            'listener' => \API\V1\Rest\Broadcast\BroadcastResource::class,
-            'route_name' => 'api.rest.broadcast',
-            'route_identifier_name' => 'broadcast_id',
-            'collection_name' => 'broadcast',
-            'entity_http_methods' => [
-                0 => 'GET',
-            ],
-            'collection_http_methods' => [
-                0 => 'GET',
-            ],
-            'collection_query_whitelist' => [],
-            'page_size' => 25,
-            'page_size_param' => null,
-            'entity_class' => \API\V1\Rest\Broadcast\BroadcastEntity::class,
-            'collection_class' => \API\V1\Rest\Broadcast\BroadcastCollection::class,
-            'service_name' => 'Broadcast',
         ],
         'API\\V1\\Rest\\Category\\Controller' => [
             'listener' => \API\V1\Rest\Category\CategoryResource::class,
@@ -134,17 +105,11 @@ return [
     'api-tools-content-negotiation' => [
         'controllers' => [
             'API\\V1\\Rest\\Message\\Controller' => 'HalJson',
-            'API\\V1\\Rest\\Broadcast\\Controller' => 'HalJson',
             'API\\V1\\Rest\\Category\\Controller' => 'HalJson',
             'API\\V1\\Rest\\Channel\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'API\\V1\\Rest\\Message\\Controller' => [
-                0 => 'application/vnd.api.v1+json',
-                1 => 'application/hal+json',
-                2 => 'application/json',
-            ],
-            'API\\V1\\Rest\\Broadcast\\Controller' => [
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/hal+json',
                 2 => 'application/json',
@@ -162,10 +127,6 @@ return [
         ],
         'content_type_whitelist' => [
             'API\\V1\\Rest\\Message\\Controller' => [
-                0 => 'application/vnd.api.v1+json',
-                1 => 'application/json',
-            ],
-            'API\\V1\\Rest\\Broadcast\\Controller' => [
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ],
@@ -191,18 +152,6 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'api.rest.message',
                 'route_identifier_name' => 'message_id',
-                'is_collection' => true,
-            ],
-            \API\V1\Rest\Broadcast\BroadcastEntity::class => [
-                'entity_identifier_name' => 'id',
-                'route_name' => 'api.rest.broadcast',
-                'route_identifier_name' => 'broadcast_id',
-                'hydrator' => \Laminas\Hydrator\ArraySerializableHydrator::class,
-            ],
-            \API\V1\Rest\Broadcast\BroadcastCollection::class => [
-                'entity_identifier_name' => 'id',
-                'route_name' => 'api.rest.broadcast',
-                'route_identifier_name' => 'broadcast_id',
                 'is_collection' => true,
             ],
             \API\V1\Rest\Category\CategoryEntity::class => [
@@ -260,13 +209,13 @@ return [
                     0 => [
                         'name' => \DoctrineModule\Validator\ObjectExists::class,
                         'options' => [
-                            'target_class' => \Gila\Entity\Broadcast::class,
+                            'target_class' => \Gila\Entity\Category::class,
                             'fields' => 'id',
                         ],
                     ],
                 ],
                 'filters' => [],
-                'name' => 'broadcast',
+                'name' => 'category',
                 'description' => 'Broadcast to deliver message',
                 'field_type' => 'int',
             ],
