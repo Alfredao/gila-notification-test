@@ -12,6 +12,8 @@ class MessageEntity implements ArraySerializableInterface
 {
     private ?int $id = null;
     private ?string $text = null;
+    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTime $updatedAt = null;
     private ?\DateTimeImmutable $deliveredAt = null;
     private ?Status $status = null;
     private ?Category $category = null;
@@ -26,6 +28,8 @@ class MessageEntity implements ArraySerializableInterface
     {
         return [
             'id'           => $this->getId(),
+            'created_at'   => $this->getCreatedAt(),
+            'updated_at'   => $this->getDeliveredAt(),
             'text'         => $this->getText(),
             'delivered_at' => $this->getDeliveredAt(),
             'status'       => $this->getStatus()->name,
@@ -117,6 +121,56 @@ class MessageEntity implements ArraySerializableInterface
     : MessageEntity
     {
         $this->deliveredAt = $deliveredAt;
+
+        return $this;
+    }
+
+    /**
+     * Get CreatedAt
+     *
+     * @return \DateTimeImmutable|null
+     */
+    public function getCreatedAt()
+    : ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set CreatedAt
+     *
+     * @param \DateTimeImmutable|null $createdAt
+     * @return MessageEntity
+     */
+    public function setCreatedAt(?\DateTimeImmutable $createdAt)
+    : MessageEntity
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get UpdatedAt
+     *
+     * @return \DateTime|null
+     */
+    public function getUpdatedAt()
+    : ?\DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set UpdatedAt
+     *
+     * @param \DateTime|null $updatedAt
+     * @return MessageEntity
+     */
+    public function setUpdatedAt(?\DateTime $updatedAt)
+    : MessageEntity
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

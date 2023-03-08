@@ -6,11 +6,3 @@ nbproject
 .idea
 .project
 .settings
-/backend/vendor/
-/backend/public/vendor/
-/backend/config/development.config.php
-/backend/config/autoload/local.php
-/backend/config/autoload/*.local.php
-/backend/!public/vendor/README.md
-/backend/data/cache/*
-/backend/!data/cache/.gitkeep

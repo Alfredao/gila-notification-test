@@ -4,9 +4,12 @@ import {MessageType} from "@/core/types";
 interface MessageState {
     messages?: MessageType[];
     loadMessages: () => Promise<MessageType[]>;
+    getMessage: (id: number) => Promise<MessageType | undefined>;
 }
 
-export const useMessageState = create<MessageState>((set, get) => ({
+export type FormData = { message: string, category: number }
+
+export const useMessageStore = create<MessageState>((set, get) => ({
     messages: undefined,
     loadMessages: async function () {
         const cachedCategories = get().messages;
@@ -38,5 +41,13 @@ export const useMessageState = create<MessageState>((set, get) => ({
         }));
 
         return fetchedMessages;
+    },
+    getMessage: async function (id: number) {
+
+        if (!get().messages) {
+            await get().loadMessages();
+        }
+
+        return get().messages?.find((p: MessageType) => p.id = id);
     },
 }));

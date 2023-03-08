@@ -1,11 +1,1 @@
 .idea/
-.vagrant/
-!/backend/data/cache/.gitkeep
-/backend/phpunit.xml
-/backend/vendor/
-/backend/config/development.config.php
-/backend/data/cache/*
-/backend/.phpunit.result.cache
-/backend/.phpcs-cache
-/backend/.env
-/backend/data/DoctrineORMModule/Proxy/

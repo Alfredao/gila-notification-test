@@ -1,15 +1,13 @@
 "use client";
 
-import styles from './page.module.css'
 import {Button, Card, Table} from "react-bootstrap";
-import {useCategoryStore} from "@/core/hooks/useCategoryStore";
 import {useEffect, useState} from "react";
-import {CategoryType, MessageType} from "@/core/types";
-import {useMessageState} from "@/core/hooks/useMessageStore";
+import {MessageType} from "@/core/types";
+import {useMessageStore} from "@/core/hooks/useMessageStore";
 
 export default function Logs() {
 
-    const messageState = useMessageState()
+    const messageState = useMessageStore()
     const [messages, setMessages] = useState<MessageType[]>([]);
 
     useEffect(() => {
@@ -24,14 +22,22 @@ export default function Logs() {
                     <thead>
                     <tr>
                         <th>#</th>
+                        <th>Category</th>
                         <th>Text</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>&nbsp;</th>
                     </tr>
                     </thead>
                     <tbody>
                     {messages.map((message, i) => (
                         <tr key={i}>
                             <td>{message.id}</td>
+                            <td>{message.category.name}</td>
                             <td>{message.text}</td>
+                            <td>{message.created_at.date}</td>
+                            <td>{message.status}</td>
+                            <td><Button variant={"primary"} size={"sm"} href={`/logs/${message.id}`}>View</Button></td>
                         </tr>
                     ))}
                     </tbody>
