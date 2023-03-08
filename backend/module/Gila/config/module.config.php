@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 return [
     'service_manager' => [
         'factories' => [
+            Messenger\Messenger::class              => Messenger\Factory\MessengerFactory::class,
             Model\CategoryModel::class              => Model\Factory\CategoryModelFactory::class,
             Model\ChannelModel::class               => Model\Factory\ChannelModelFactory::class,
             Model\MessageModel::class               => Model\Factory\MessageModelFactory::class,

@@ -26,6 +26,7 @@ final class Version20230307055611 extends AbstractMigration
         $channelTable->addColumn('id', 'integer', ['autoincrement' => true, 'unsigned' => true]);
         $channelTable->addColumn('created_at', 'datetime', ['notnull' => true]);
         $channelTable->addColumn('updated_at', 'datetime', ['notnull' => false]);
+        $channelTable->addColumn('type', 'string', ['length' => 45, 'notnull' => true]);
         $channelTable->addColumn('name', 'string', ['length' => 255, 'notnull' => true]);
         $channelTable->addColumn('status', 'integer', ['notnull' => true]);
 

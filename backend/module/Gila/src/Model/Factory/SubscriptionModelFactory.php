@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Gila\Model\Factory;
 
 use Doctrine\ORM\EntityManager;
+use Gila\Messenger\Messenger;
 use Gila\Model\SubscriptionModel;
 use interop\container\containerinterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
@@ -25,6 +26,7 @@ class SubscriptionModelFactory implements FactoryInterface
     {
         $model = new SubscriptionModel();
         $model->setEntityManager($container->get(EntityManager::class));
+        $model->setMessenger($container->get(Messenger::class));
 
         return $model;
     }

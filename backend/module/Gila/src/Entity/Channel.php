@@ -6,13 +6,23 @@ namespace Gila\Entity;
 use Application\Entity\Traits\Timestamping\TimestampableTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gila\Entity\Channel\EmailChannel;
+use Gila\Entity\Channel\PushChannel;
+use Gila\Entity\Channel\SmsChannel;
 use Gila\Entity\Channel\Status;
 use Gila\Repository\ChannelRepo;
 
 #[ORM\Table(name: 'channel')]
 #[ORM\Entity(repositoryClass: ChannelRepo::class)]
 #[ORM\HasLifecycleCallbacks]
-class Channel
+#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'type', type: Types::STRING)]
+#[ORM\DiscriminatorMap([
+    'email' => EmailChannel::class,
+    'sms'   => SmsChannel::class,
+    'push'  => PushChannel::class,
+])]
+abstract class Channel
 {
     use TimestampableTrait;
 

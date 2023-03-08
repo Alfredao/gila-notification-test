@@ -11,7 +11,7 @@ class PushAdapter implements AdapterInterface
     public function send(Message $message)
     : bool
     {
-        // TODO: Implement send() method for E-mail delivering.
+        // TODO: Implement send() method for Push Notifications delivering.
         return true;
     }
 }

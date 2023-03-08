@@ -15,7 +15,7 @@ class Messenger
     public function broadcast(Message $message)
     : void
     {
-        if (isset($this->adapter)) {
+        if (! isset($this->adapter)) {
             throw new \RuntimeException('Before broadcasting a message, you should first set an adapter for delivering the message');
         }
 
