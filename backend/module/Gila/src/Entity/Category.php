@@ -29,12 +29,9 @@ class Category
     #[ORM\Column(name: 'status', type: Types::INTEGER, nullable: false, enumType: Status::class)]
     private ?Status $status = null;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Broadcast::class)]
-    private Collection $broadcasts;
 
     public function __construct()
     {
-        $this->broadcasts = new ArrayCollection();
     }
 
     /**
@@ -96,17 +93,6 @@ class Category
         $this->status = $status;
 
         return $this;
-    }
-
-    /**
-     * Get Broadcasts
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getBroadcasts()
-    : Collection
-    {
-        return $this->broadcasts;
     }
 
     /**

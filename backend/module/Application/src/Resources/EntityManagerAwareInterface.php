@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Application\Resources;
 
+use Doctrine\ORM\EntityManager;
+
 /**
  * Interface EntityManagerAwareInterface
  *
@@ -18,7 +20,7 @@ interface EntityManagerAwareInterface
      * @return ?\Doctrine\ORM\EntityManager
      */
     public function getEntityManager()
-    : ?\Doctrine\ORM\EntityManager;
+    : ?EntityManager;
 
     /**
      * Set entity manager
@@ -26,6 +28,6 @@ interface EntityManagerAwareInterface
      * @param \Doctrine\ORM\EntityManager $entityManager
      * @return static
      */
-    public function setEntityManager(\Doctrine\ORM\EntityManager $entityManager)
+    public function setEntityManager(EntityManager $entityManager)
     : static;
 }

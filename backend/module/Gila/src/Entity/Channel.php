@@ -4,11 +4,9 @@ declare(strict_types=1);
 namespace Gila\Entity;
 
 use Application\Entity\Traits\Timestamping\TimestampableTrait;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gila\Entity\User\Status;
+use Gila\Entity\Channel\Status;
 use Gila\Repository\ChannelRepo;
 
 #[ORM\Table(name: 'channel')]
@@ -29,12 +27,8 @@ class Channel
     #[ORM\Column(name: 'status', type: Types::INTEGER, nullable: false, enumType: Status::class)]
     private ?Status $status = null;
 
-    #[ORM\OneToMany(mappedBy: 'channel', targetEntity: Broadcast::class)]
-    private Collection $broadcasts;
-
     public function __construct()
     {
-        $this->broadcasts = new ArrayCollection();
     }
 
     /**
@@ -76,7 +70,7 @@ class Channel
     /**
      * Get Status
      *
-     * @return \Gila\Entity\User\Status|null
+     * @return \Gila\Entity\Channel\Status|null
      */
     public function getStatus()
     : ?Status
@@ -87,7 +81,7 @@ class Channel
     /**
      * Set Status
      *
-     * @param \Gila\Entity\User\Status $status
+     * @param \Gila\Entity\Channel\Status $status
      * @return Channel
      */
     public function setStatus(Status $status)
@@ -96,17 +90,6 @@ class Channel
         $this->status = $status;
 
         return $this;
-    }
-
-    /**
-     * Get Broadcasts
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getBroadcasts()
-    : Collection
-    {
-        return $this->broadcasts;
     }
 
     /**

@@ -28,5 +28,6 @@ interface RedisAwareInterface
      * @param \Application\Cache\Redis $redis
      * @return $this
      */
-    public function setRedis(Redis $redis);
+    public function setRedis(Redis $redis)
+    : static;
 }

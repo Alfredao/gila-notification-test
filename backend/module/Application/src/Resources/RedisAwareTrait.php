@@ -31,6 +31,7 @@ trait RedisAwareTrait
      * @return \Application\Resources\RedisAwareTrait
      */
     public function setRedis(Redis $redis)
+    : static
     {
         $this->redis = $redis;
 

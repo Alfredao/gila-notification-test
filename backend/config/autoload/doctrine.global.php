@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 use Application\Cache\Redis;
-use Application\Utils;
+use Application\Resources\Functions;
 use Doctrine\DBAL\Driver\PDO\MySQL\Driver;
 use DoctrineExtensions\Query\Mysql\Acos;
 use DoctrineExtensions\Query\Mysql\Asin;
@@ -86,7 +86,7 @@ return [
         'configuration' => [
             'orm_default' => [
                 'generate_proxies'   => true,
-                'proxy_dir'          => Utils::getRootDir() . '/data/DoctrineORMModule/Proxy',
+                'proxy_dir'          => Functions::getRootDir() . '/data/DoctrineORMModule/Proxy',
                 'metadata_cache'     => 'redis',
                 'query_cache'        => 'redis',
                 'result_cache'       => 'redis',
@@ -96,7 +96,7 @@ return [
                     'enabled'                    => true,
                     'default_lifetime'           => 200,
                     'default_lock_lifetime'      => 500,
-                    'file_lock_region_directory' => Utils::getRootDir() . '/data/cache/file',
+                    'file_lock_region_directory' => Functions::getRootDir() . '/data/cache/file',
                     'regions'                    => [
                     ],
                 ],
