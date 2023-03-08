@@ -4,8 +4,6 @@ services:
     image: mariadb:10.3.36
     platform: linux/x86_64
     container_name: gilanotification-mariadb
-    volumes:
-      - mariadb-data:/var/lib/mysql
     env_file:
       - ./backend/.env
     ports:
@@ -48,5 +46,3 @@ services:
       - ./frontend:/app
     ports:
       - "3000:3000"
-volumes:
-  mariadb-data:
