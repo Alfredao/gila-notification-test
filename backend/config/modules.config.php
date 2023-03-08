@@ -31,6 +31,7 @@ return [
     'Laminas\\ZendFrameworkBridge',
     'DoctrineModule',
     'DoctrineORMModule',
+    'LmcCors',
     'Application',
     'Gila',
     'API',

@@ -14,4 +14,9 @@ return [
             ],
         ],
     ],
+    'lmc_cors'                      => [
+        'allowed_origins' => ['*'],
+        'allowed_methods' => ['GET', 'POST'],
+        'allowed_headers' => ['Content-Type'],
+    ],
 ];

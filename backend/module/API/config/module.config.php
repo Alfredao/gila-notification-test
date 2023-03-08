@@ -67,6 +67,7 @@ return [
             ],
             'collection_http_methods' => [
                 0 => 'POST',
+                1 => 'GET',
             ],
             'collection_query_whitelist' => [],
             'page_size' => 25,

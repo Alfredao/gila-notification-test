@@ -8,6 +8,7 @@ use Gila\Model\MessageModel;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
 use Laminas\Hydrator\ClassMethodsHydrator;
+use Laminas\Stdlib\Parameters;
 
 class MessageResource extends AbstractResourceListener
 {
@@ -59,6 +60,34 @@ class MessageResource extends AbstractResourceListener
         $result->exchangeArray((new ClassMethodsHydrator())->extract($message));
 
         return $result->getArrayCopy();
+    }
+
+    /**
+     * Fetch all or a subset of resources
+     *
+     * @param array|Parameters $params
+     * @return ApiProblem|array
+     */
+    public function fetchAll($params = [])
+    : array|ApiProblem
+    {
+        try {
+            $em = $this->getMessageModel()->getEntityManager();
+
+            $messages = $em->getRepository(Message::class)->findAll();
+        } catch (\Exception $e) {
+            return new ApiProblem(405, $e->getMessage());
+        }
+
+        $result = [];
+        foreach ($messages as $message) {
+            $entity = new MessageEntity();
+            $entity->exchangeArray((new ClassMethodsHydrator())->extract($message));
+
+            $result[] = $entity->getArrayCopy();
+        }
+
+        return $result;
     }
 
     /**
