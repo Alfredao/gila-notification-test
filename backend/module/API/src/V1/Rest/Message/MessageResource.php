@@ -74,7 +74,7 @@ class MessageResource extends AbstractResourceListener
         try {
             $em = $this->getMessageModel()->getEntityManager();
 
-            $messages = $em->getRepository(Message::class)->findAll();
+            $messages = $em->getRepository(Message::class)->findBy((array)$params, ['id' => 'desc']);
         } catch (\Exception $e) {
             return new ApiProblem(405, $e->getMessage());
         }

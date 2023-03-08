@@ -34,6 +34,18 @@ class Message
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
     private ?Category $category = null;
 
+    public function getArrayCopy()
+    : array
+    {
+        return [
+            'id'           => $this->getId(),
+            'text'         => $this->getText(),
+            'delivered_at' => $this->getDeliveredAt(),
+            'status'       => $this->getStatus()->name,
+            'category'     => $this->getCategory()?->getArrayCopy(),
+        ];
+    }
+
     /**
      * Get Id
      *

@@ -32,7 +32,7 @@ class MessageEntity implements ArraySerializableInterface
             'updated_at'   => $this->getDeliveredAt(),
             'text'         => $this->getText(),
             'delivered_at' => $this->getDeliveredAt(),
-            'status'       => $this->getStatus()->name,
+            'status'       => $this->getStatus()?->name,
             'category'     => $this->getCategory()?->getArrayCopy(),
         ];
     }

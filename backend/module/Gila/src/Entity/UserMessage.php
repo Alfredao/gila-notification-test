@@ -28,6 +28,10 @@ class UserMessage
     #[ORM\JoinColumn(name: 'message_id', referencedColumnName: 'id')]
     private ?Message $message = null;
 
+    #[ORM\OneToOne(targetEntity: Subscription::class)]
+    #[ORM\JoinColumn(name: 'subscription_id', referencedColumnName: 'id')]
+    private ?Subscription $subscription = null;
+
     /**
      * Get Id
      *
@@ -85,6 +89,31 @@ class UserMessage
     : UserMessage
     {
         $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * Get Subscription
+     *
+     * @return \Gila\Entity\Subscription|null
+     */
+    public function getSubscription()
+    : ?Subscription
+    {
+        return $this->subscription;
+    }
+
+    /**
+     * Set Subscription
+     *
+     * @param \Gila\Entity\Subscription $subscription
+     * @return UserMessage
+     */
+    public function setSubscription(Subscription $subscription)
+    : UserMessage
+    {
+        $this->subscription = $subscription;
 
         return $this;
     }

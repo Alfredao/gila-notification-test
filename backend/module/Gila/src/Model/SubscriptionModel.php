@@ -96,6 +96,7 @@ class SubscriptionModel extends AbstractModel implements EntityManagerAwareInter
         $this->getEntityManager()->wrapInTransaction(static function (EntityManager $em) use ($message, $subscription) {
             $userMessage = new UserMessage();
             $userMessage->setMessage($message);
+            $userMessage->setSubscription($subscription);
             $userMessage->setUser($subscription->getUser());
 
             $em->persist($userMessage);

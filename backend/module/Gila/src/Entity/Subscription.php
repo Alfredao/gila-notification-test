@@ -32,6 +32,16 @@ class Subscription
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'id')]
     private ?Category $category = null;
 
+    public function getArrayCopy()
+    : array
+    {
+        return [
+            'id'       => $this->getId(),
+            'category' => $this->getCategory()?->getArrayCopy(),
+            'channel'  => $this->getChannel()?->getArrayCopy(),
+        ];
+    }
+
     /**
      * Get Id
      *

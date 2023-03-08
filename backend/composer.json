@@ -78,9 +78,6 @@
     "development-enable": "laminas-development-mode enable",
     "development-status": "laminas-development-mode status",
     "migration:generate": "doctrine-migrations migration:generate",
-    "migration:migrate": "doctrine-migrations migration:migrate",
-    "migration:up": "doctrine-migrations migration:execute --up 'Migrations\\Version20221204182400'",
-    "migration:down": "doctrine-migrations migration:execute --down 'Migrations\\Version20221204182400'",
     "post-create-project-cmd": [
       "@development-enable",
       "php -r \"if (file_exists('src/remove-package-artifacts.php')) include 'src/remove-package-artifacts.php';\"",

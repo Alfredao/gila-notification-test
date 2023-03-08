@@ -15,7 +15,7 @@ final class Version20230308003703 extends AbstractMigration
     public function getDescription()
     : string
     {
-        return '';
+        return 'Create user message table';
     }
 
     public function up(Schema $schema)
@@ -26,6 +26,7 @@ final class Version20230308003703 extends AbstractMigration
         $table->addColumn('id', 'integer', ['autoincrement' => true, 'unsigned' => true]);
         $table->addColumn('user_id', 'integer', ['unsigned' => true]);
         $table->addColumn('message_id', 'integer', ['unsigned' => true]);
+        $table->addColumn('subscription_id', 'integer', ['unsigned' => true]);
         $table->addColumn('created_at', 'datetime', ['notnull' => true]);
         $table->addColumn('updated_at', 'datetime', ['notnull' => false]);
 
@@ -33,6 +34,7 @@ final class Version20230308003703 extends AbstractMigration
 
         $table->addForeignKeyConstraint('user', ['user_id'], ['id'], ['onDelete' => 'CASCADE'], 'fk_user_message_user');
         $table->addForeignKeyConstraint('message', ['message_id'], ['id'], ['onDelete' => 'CASCADE'], 'fk_user_message_message');
+        $table->addForeignKeyConstraint('subscription', ['subscription_id'], ['id'], ['onDelete' => 'CASCADE'], 'fk_user_message_subscription');
     }
 
     public function down(Schema $schema)

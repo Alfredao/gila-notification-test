@@ -46,6 +46,16 @@ class User
         $this->subscriptions = new ArrayCollection();
     }
 
+    public function getArrayCopy()
+    : array
+    {
+        return [
+            'id'    => $this->getId(),
+            'name'  => $this->getName(),
+            'email' => $this->getEmail(),
+        ];
+    }
+
     /**
      * Get Id
      *

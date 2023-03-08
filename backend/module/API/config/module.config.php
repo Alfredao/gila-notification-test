@@ -5,6 +5,7 @@ return [
             \API\V1\Rest\Message\MessageResource::class => \API\V1\Rest\Message\MessageResourceFactory::class,
             \API\V1\Rest\Category\CategoryResource::class => \API\V1\Rest\Category\CategoryResourceFactory::class,
             \API\V1\Rest\Channel\ChannelResource::class => \API\V1\Rest\Channel\ChannelResourceFactory::class,
+            \API\V1\Rest\UserMessage\UserMessageResource::class => \API\V1\Rest\UserMessage\UserMessageResourceFactory::class,
         ],
     ],
     'router' => [
@@ -36,6 +37,15 @@ return [
                     ],
                 ],
             ],
+            'api.rest.user-message' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/api/user-message[/:user_message_id]',
+                    'defaults' => [
+                        'controller' => 'API\\V1\\Rest\\UserMessage\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
@@ -43,6 +53,7 @@ return [
             0 => 'api.rest.message',
             2 => 'api.rest.category',
             3 => 'api.rest.channel',
+            4 => 'api.rest.user-message',
         ],
     ],
     'api-tools-rest' => [
@@ -101,12 +112,31 @@ return [
             'collection_class' => \API\V1\Rest\Channel\ChannelCollection::class,
             'service_name' => 'Channel',
         ],
+        'API\\V1\\Rest\\UserMessage\\Controller' => [
+            'listener' => \API\V1\Rest\UserMessage\UserMessageResource::class,
+            'route_name' => 'api.rest.user-message',
+            'route_identifier_name' => 'user_message_id',
+            'collection_name' => 'user_message',
+            'entity_http_methods' => [],
+            'collection_http_methods' => [
+                0 => 'GET',
+            ],
+            'collection_query_whitelist' => [
+                0 => 'message',
+            ],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \API\V1\Rest\UserMessage\UserMessageEntity::class,
+            'collection_class' => \API\V1\Rest\UserMessage\UserMessageCollection::class,
+            'service_name' => 'UserMessage',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
             'API\\V1\\Rest\\Message\\Controller' => 'HalJson',
             'API\\V1\\Rest\\Category\\Controller' => 'HalJson',
             'API\\V1\\Rest\\Channel\\Controller' => 'HalJson',
+            'API\\V1\\Rest\\UserMessage\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'API\\V1\\Rest\\Message\\Controller' => [
@@ -124,6 +154,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'API\\V1\\Rest\\UserMessage\\Controller' => [
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'API\\V1\\Rest\\Message\\Controller' => [
@@ -135,6 +170,10 @@ return [
                 1 => 'application/json',
             ],
             'API\\V1\\Rest\\Channel\\Controller' => [
+                0 => 'application/vnd.api.v1+json',
+                1 => 'application/json',
+            ],
+            'API\\V1\\Rest\\UserMessage\\Controller' => [
                 0 => 'application/vnd.api.v1+json',
                 1 => 'application/json',
             ],
@@ -176,6 +215,18 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'api.rest.channel',
                 'route_identifier_name' => 'channel_id',
+                'is_collection' => true,
+            ],
+            \API\V1\Rest\UserMessage\UserMessageEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'api.rest.user-message',
+                'route_identifier_name' => 'user_message_id',
+                'hydrator' => \Laminas\Hydrator\ArraySerializableHydrator::class,
+            ],
+            \API\V1\Rest\UserMessage\UserMessageCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'api.rest.user-message',
+                'route_identifier_name' => 'user_message_id',
                 'is_collection' => true,
             ],
         ],
