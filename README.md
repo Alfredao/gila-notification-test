@@ -33,5 +33,6 @@ To install and run the application, follow these steps:
 1. Clone the project repository to your local machine.
 2. Navigate to the project directory in your terminal.
 3. Run `docker-compose up -d` to start the Docker containers.
-4. Run `docker exec -it gilanotification-php-apache php /var/www/html/vendor/bin/doctrine-migrations migration:migrate` to create and populate the database
-5. Navigate to `http://localhost:3000` in your web browser to view the application.
+4. Run `docker exec -it gilanotification-php-apache composer install` to install composer dependencies.
+5. Run `docker exec -it gilanotification-php-apache php /var/www/html/vendor/bin/doctrine-migrations migration:migrate` to create and populate the database
+6. Navigate to `http://localhost:3000` in your web browser to view the application.
