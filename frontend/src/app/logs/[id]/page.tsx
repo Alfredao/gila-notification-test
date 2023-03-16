@@ -48,7 +48,7 @@ export default function ViewLog({params}: { params: { id: number } }) {
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>User e-mail</th>
+                        <th>User</th>
                         <th>Sent on</th>
                         <th>Channel</th>
                     </tr>
