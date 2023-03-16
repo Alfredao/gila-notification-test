@@ -42,7 +42,5 @@ services:
   nextjs:
     build: .
     container_name: gilanotification-nextjs
-    volumes:
-      - ./frontend:/app
     ports:
       - "3000:3000"
